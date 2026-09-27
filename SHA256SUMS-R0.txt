@@ -1,0 +1,16 @@
+# Print Shop GS OkiGraph I R0 known hashes
+#
+# Full original/patched disk images are intentionally not stored in this repo.
+
+# PRDRIVERS original baseline
+09e51f041e67fa58756c0c32a362bcff7119488af5070df884f4778fff86e3e0  PRDRIVERS.original
+
+# PRDRIVERS after R0 selector-only patch
+38695693478234d4821a0af9095e3bad64e574e31566256c5112a75c217990f9  PRDRIVERS.R0
+
+# R0 patched disk outputs produced during the initial forensic/build session
+# Main application disk
+ec80e9883d51906f7861442da6dc1151168e0bf0dbe615546adbfdc9e4647418  Print_Shop_GS_OkiGraphI_R0_Main.2mg
+
+# v1.1 HD-install disk
+41211d1a27320ab3be763b5f8f0853e3bb615654a6559e2f13f6661181fb54ef  Print_Shop_GS_OkiGraphI_R0_HDInstall.2mg

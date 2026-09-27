@@ -1,0 +1,16 @@
+# Original and patched Print Shop GS disk images are not redistributed.
+*.2mg
+*.po
+*.dsk
+*.img
+
+# Local extracted proprietary files / working directories
+original/
+extracted/
+work/
+output/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
