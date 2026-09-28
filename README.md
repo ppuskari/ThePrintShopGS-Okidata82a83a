@@ -73,6 +73,20 @@ Compared with R2, R4 changes exactly two bytes: one descriptor byte and one bran
 
 See [`docs/R4-ANALYSIS.md`](docs/R4-ANALYSIS.md).
 
+## R5 status
+
+**R5 returns to the coherent R2 baseline and sanitizes PSGS vertical movement without carrying R3 or R4 forward.**
+
+The OkiGraph descriptor now uses a unique maximum movement chunk of `$0E`. A small MF compare hook rounds any positive sub-`$0E` remainder up to `$0E`, while larger requests continue through PSGS's existing chunk loop. The printer therefore receives only repeated, hardware-proven native OkiGraph movement sequences:
+
+```text
+03 03 0E 03 02
+```
+
+Unlike R4, small positioning requests are not discarded. Other stock printer descriptors retain their original movement semantics because none uses a `$0E` maximum chunk.
+
+See [`docs/R5-ANALYSIS.md`](docs/R5-ANALYSIS.md) and [`docs/R5-HARDWARE-TEST.md`](docs/R5-HARDWARE-TEST.md).
+
 ## Repository layout
 
 ```text
@@ -123,6 +137,6 @@ This work continues a broader effort to restore and extend Okidata support on vi
 
 ## Current milestone
 
-**R4 — native movement quantizer**
+**R5 — native movement sanitizer**
 
-R4 removes arbitrary PSGS spacing values from OkiGraph command state while preserving the coherent R2 raster path. Final 15/144-inch vertical page resampling remains later work.
+R5 keeps R2's coherent graphics path, removes arbitrary movement values from OkiGraph command state, and preserves positive small positioning by rounding it to real native feeds. Final nonuniform 15/144-inch vertical resampling remains later work.
