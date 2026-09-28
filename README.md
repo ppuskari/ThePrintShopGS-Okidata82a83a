@@ -46,6 +46,23 @@ It keeps PSGS's existing seven-dot / 60-column-inch encoder and literal-ETX esca
 
 That is native OkiGraph I: enter graphics, graphics feed + carriage return, then exit graphics. R1 changes no PSGS executable code and leaves the stock ML92/93 entry untouched. See [`docs/R1-ANALYSIS.md`](docs/R1-ANALYSIS.md).
 
+## R3 status
+
+**R3 traces and tests the PSGS 120-to-60 horizontal reducer without changing any OkiGraph I protocol bytes.**
+
+Reverse engineering of `MF` shows that the Oki graphics-format flag (`1`) selects an **unsized streaming** graphics path: PSGS emits the descriptor's begin string and raw encoded raster data, but no width/count preamble. The two preceding optional descriptor blocks are horizontal positioning and color selection.
+
+R3 therefore leaves the R2 native OkiGraph descriptor unchanged and changes one three-byte instruction in `MF`:
+
+```text
+$72F9: 9C 07 73   STZ $7307
+     -> 20 25 75   JSR $7525
+```
+
+`$7525` is PSGS's existing helper that clears the 60-dpi reducer phase (`$73E7`) and both OR accumulators (`$7869/$786B`). This makes every raster row begin from a known horizontal reduction state.
+
+See [`docs/R3-ANALYSIS.md`](docs/R3-ANALYSIS.md) and [`docs/R3-HARDWARE-TEST.md`](docs/R3-HARDWARE-TEST.md).
+
 ## Repository layout
 
 ```text
@@ -96,10 +113,6 @@ This work continues a broader effort to restore and extend Okidata support on vi
 
 ## Current milestone
 
-**R1 — native OkiGraph I descriptor protocol/banding test**
+**R3 — horizontal reducer row-reset diagnostic**
 
-The immediate hardware question is whether the same Christmas-card test that failed after the first rows in R0 now remains coherent across raster bands. Final nonuniform 15/144-inch vertical geometry and the Test Paper Position post-marker feed remain later work.
-
-**R0 — ML84 descriptor compatibility proof**
-
-Next milestone depends on hardware results. If the output is coherent but vertically stretched, R1 will concentrate on OkiGraph I's 15/144-inch band-origin geometry while preserving the already-compatible Oki command framing.
+R3 preserves the working native OkiGraph I protocol from R2 and tests whether stale PSGS 120→60 reducer phase/carry causes the two isolated extra first graphics columns seen on hardware. Vertical 15/144-inch resampling remains deliberately postponed.
