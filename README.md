@@ -63,6 +63,16 @@ $72F9: 9C 07 73   STZ $7307
 
 See [`docs/R3-ANALYSIS.md`](docs/R3-ANALYSIS.md) and [`docs/R3-HARDWARE-TEST.md`](docs/R3-HARDWARE-TEST.md).
 
+## R4 status
+
+**R4 fixes a protocol bug in R1/R2/R3 vertical movement.**
+
+PSGS passes a movement *distance* into its generic spacing routine; R2 had been inserting that value directly as an OkiGraph command byte. R4 caps the chunk at `$0E` and suppresses sub-`$0E` remainders so the printer only ever sees the validated native graphics feed command `03 0E`.
+
+Compared with R2, R4 changes exactly two bytes: one descriptor byte and one branch displacement in `MF`. R3's reducer-reset diagnostic is not carried forward.
+
+See [`docs/R4-ANALYSIS.md`](docs/R4-ANALYSIS.md).
+
 ## Repository layout
 
 ```text
@@ -113,6 +123,6 @@ This work continues a broader effort to restore and extend Okidata support on vi
 
 ## Current milestone
 
-**R3 — horizontal reducer row-reset diagnostic**
+**R4 — native movement quantizer**
 
-R3 preserves the working native OkiGraph I protocol from R2 and tests whether stale PSGS 120→60 reducer phase/carry causes the two isolated extra first graphics columns seen on hardware. Vertical 15/144-inch resampling remains deliberately postponed.
+R4 removes arbitrary PSGS spacing values from OkiGraph command state while preserving the coherent R2 raster path. Final 15/144-inch vertical page resampling remains later work.
