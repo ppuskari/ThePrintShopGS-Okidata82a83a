@@ -1,0 +1,10 @@
+# Print Shop GS OkiGraph I R1 known hashes
+
+09e51f041e67fa58756c0c32a362bcff7119488af5070df884f4778fff86e3e0  PRDRIVERS.original
+23bddae81c18519c0d2d6c1c6d664088c7b7ea3c5720a054b1e72e2397b7b7fb  PRDRIVERS.R1
+03d608126d6d79f03a4a1a81b1821a31434a58f006388a5ffff54df917baac1d  scripts/patch_psgs_okigraph_r1.py
+
+# Generated locally from user-supplied originals; full commercial disk images
+# are not stored in the public repository.
+e53d4e67c72c755eaf9522020ed1030773d93de077c1e32bc29bdc26a8712d69  Print_Shop_GS_OkiGraphI_R1_Main.2mg
+2d5e5dd9a1d1e01c86828919666ee624bb5e5df4d34eff9b5d4f6f278bf122c2  Print_Shop_GS_OkiGraphI_R1_HDInstall.2mg

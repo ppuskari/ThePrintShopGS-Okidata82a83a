@@ -34,6 +34,18 @@ The existing PSGS ML84 descriptor already describes the same broad protocol fami
 
 The important known mechanical difference is vertical movement. Standard Oki 7-bit graphics uses a nominal **14/144-inch** band advance, while the physically validated 82A/83A OkiGraph I firmware advances **15/144 inch** per native graphics band. A successful R0 may therefore be coherent but approximately **7.14% too tall** over long vertical spans.
 
+## R1 status
+
+**R1 replaces the ML84 command fields with native 82A/83A OkiGraph I framing.**
+
+It keeps PSGS's existing seven-dot / 60-column-inch encoder and literal-ETX escaping, but changes raster entry to `CR, ETX` and redefines the programmable movement record so the normal `$0E` raster-band movement emits:
+
+```text
+03 03 0E 03 02
+```
+
+That is native OkiGraph I: enter graphics, graphics feed + carriage return, then exit graphics. R1 changes no PSGS executable code and leaves the stock ML92/93 entry untouched. See [`docs/R1-ANALYSIS.md`](docs/R1-ANALYSIS.md).
+
 ## Repository layout
 
 ```text
@@ -83,6 +95,10 @@ This repository does **not** contain Broderbund Print Shop GS disk images, execu
 This work continues a broader effort to restore and extend Okidata support on vintage Apple systems. It also continues printer-driver ideas Petar had discussed with Rebecca Heineman, including IIgs printing work. Rebecca's enthusiasm for the Apple IIgs and for solving exactly this kind of low-level compatibility problem remains part of the spirit of the project.
 
 ## Current milestone
+
+**R1 — native OkiGraph I descriptor protocol/banding test**
+
+The immediate hardware question is whether the same Christmas-card test that failed after the first rows in R0 now remains coherent across raster bands. Final nonuniform 15/144-inch vertical geometry and the Test Paper Position post-marker feed remain later work.
 
 **R0 — ML84 descriptor compatibility proof**
 
