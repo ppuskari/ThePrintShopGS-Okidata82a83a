@@ -1,0 +1,5 @@
+# Print Shop GS OkiGraph I R4 known hashes
+bc2f9beac87b9d32f839a5bfd3af8271b42d05649c6ec641a103c4dda875bad9  MF.R4
+e535b0eae5c9b5e0fd54cc192369d7dba323254ee3a4f8b702ed65e9e49017b0  PRDRIVERS.R4
+39658f45eb29440b0d360da9d0508c65019759507848057a083b81f774a57217  Print_Shop_GS_OkiGraphI_R4_Main.2mg
+670bad888ac6e8958e08df798c8ffd6315b4e01ade7c6de3ac89cdeb58eaee61  Print_Shop_GS_OkiGraphI_R4_HDInstall.2mg
