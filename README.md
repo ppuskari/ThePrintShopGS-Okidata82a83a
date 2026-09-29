@@ -87,6 +87,28 @@ Unlike R4, small positioning requests are not discarded. Other stock printer des
 
 See [`docs/R5-ANALYSIS.md`](docs/R5-ANALYSIS.md) and [`docs/R5-HARDWARE-TEST.md`](docs/R5-HARDWARE-TEST.md).
 
+## R9 status
+
+**R9 is the first geometry-corrected build on top of the hardware-good R8 graphics path.**
+
+R8 established clean persistent OkiGraph graphics, correct literal-ETX handling, coherent greeting cards/signs, and native `03 0E` band movement. The remaining defect was vertical output about 7.14% too tall because OkiGraph I physically advances each band origin by 15/144 inch instead of PSGS's logical 14/144 inch.
+
+R9 uses Print Shop GS's own vertical phase-table resampler and expresses the correction exactly as:
+
+```text
+70 / 75 = 14 / 15
+```
+
+The phase schedule is:
+
+```text
+1 1 1 1 1 1 1 0 1 1 1 1 1 1 1
+```
+
+so fourteen printer rows are emitted per fifteen logical source rows. R8's printer protocol/state and horizontal 120→60 reducer are otherwise unchanged.
+
+See [`docs/R9-ANALYSIS.md`](docs/R9-ANALYSIS.md) and [`docs/R9-HARDWARE-TEST.md`](docs/R9-HARDWARE-TEST.md).
+
 ## Repository layout
 
 ```text
@@ -137,6 +159,6 @@ This work continues a broader effort to restore and extend Okidata support on vi
 
 ## Current milestone
 
-**R5 — native movement sanitizer**
+**R9 — exact 14/15 vertical geometry correction**
 
-R5 keeps R2's coherent graphics path, removes arbitrary movement values from OkiGraph command state, and preserves positive small positioning by rounding it to real native feeds. Final nonuniform 15/144-inch vertical resampling remains later work.
+R9 freezes the working R8 OkiGraph protocol/state path and uses PSGS's native vertical scaler to cancel the 15/14 physical band expansion. Hardware validation should confirm restored top/bottom whitespace while leaving the successful R8 horizontal geometry and graphics cleanliness unchanged.
