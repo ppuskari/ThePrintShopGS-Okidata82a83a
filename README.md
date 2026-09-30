@@ -109,6 +109,20 @@ so fourteen printer rows are emitted per fifteen logical source rows. R8's print
 
 See [`docs/R9-ANALYSIS.md`](docs/R9-ANALYSIS.md) and [`docs/R9-HARDWARE-TEST.md`](docs/R9-HARDWARE-TEST.md).
 
+## R11 status
+
+**R11 moves the 14/15 vertical correction to the physical OkiGraph band-feed schedule.**
+
+R8 remains the visual/raster baseline. R9/R10 source-row scaler changes are not carried forward. R11 keeps the stock 72/72 PSGS vertical source mapping and emits fourteen native `03 0E` feeds for every fifteen logical graphics-band transitions. The fifteenth transition exits graphics, performs CR only with no linefeed, and re-enters graphics on the next raster row.
+
+```text
+15 * 14/144 = 14 * 15/144
+```
+
+Test Paper Position uses the same exit + CR-only helper, so repeated registration tests should return the carriage left without moving the paper vertically.
+
+See [`docs/R11-ANALYSIS.md`](docs/R11-ANALYSIS.md) and [`docs/R11-HARDWARE-TEST.md`](docs/R11-HARDWARE-TEST.md).
+
 ## Repository layout
 
 ```text
@@ -159,6 +173,6 @@ This work continues a broader effort to restore and extend Okidata support on vi
 
 ## Current milestone
 
-**R9 — exact 14/15 vertical geometry correction**
+**R11 — physical 14/15 band-feed correction candidate**
 
-R9 freezes the working R8 OkiGraph protocol/state path and uses PSGS's native vertical scaler to cancel the 15/14 physical band expansion. Hardware validation should confirm restored top/bottom whitespace while leaving the successful R8 horizontal geometry and graphics cleanliness unchanged.
+R11 restores R8's clean source/raster geometry and tests the vertical correction at the physical feed layer: fourteen 15/144-inch OkiGraph feeds for every fifteen logical 14/144-inch band transitions. Hardware validation is pending.
